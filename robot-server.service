@@ -1,0 +1,9 @@
+[Unit]
+Description="The service running the main robot firmware."
+
+[Install]
+WantedBy=multi-user.target
+
+[Service]
+Restart=on-failure
+ExecStart=/usr/local/bin/robot-server

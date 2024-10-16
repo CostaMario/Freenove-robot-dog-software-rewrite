@@ -1,0 +1,17 @@
+name: Build project
+run-name: ${{ github.actor }} is building the project.
+on: [release]
+jobs:
+    Build-robot-source:
+        runs-on: ubuntu-22.04
+        steps:
+            - uses: actions/checkout@v4
+            - run: mkdir -p ${{ github.workspace }}/build
+            - name: Configure CMake
+              run: cmake -DCMAKE_TOOLCHAIN_FILE=../robot-src/Toolchain-RaspberryPi.cmake robot-src -B ${{ github.workspace }}/build
+            - run: cmake --build ${{ github.workspace }}/build
+            - name: Release
+              uses: softprops/action-gh-release@v2
+              if: startsWith(github.ref, 'refs/tags/')
+              with:
+                files: build/robot-server
