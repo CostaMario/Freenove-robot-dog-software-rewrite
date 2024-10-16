@@ -1,10 +1,17 @@
 name: Build project
 run-name: ${{ github.actor }} is building the project.
-on: [push]
+on: [workflow_dispatch]
 jobs:
     Build-robot-source:
         runs-on: ubuntu-22.04
         steps:
+            - name: Checkout
+              uses: actions/checkout@v2
+              with:
+                submodules: true
+            - name: Git Submodule Update
+              run: |
+                git submodule update
             - run: sudo apt-get install gcc-aarch64-linux-gnu
             - run: sudo apt-get install g++-aarch64-linux-gnu
             - run: git -C ${{ github.workspace }} submodule update
