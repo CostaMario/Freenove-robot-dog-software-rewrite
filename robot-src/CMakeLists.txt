@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.0.0)
 
+project(robot-server)
+
 add_subdirectory(libraries/rpi_ws281x)
 
 add_executable(robot-server main.cxx)

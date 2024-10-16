@@ -5,6 +5,8 @@ jobs:
     Build-robot-source:
         runs-on: ubuntu-22.04
         steps:
+            - run: apt-get install gcc-aarch64-linux-gnu
+            - run: apt-get install g++-aarch64-linux-gnu
             - uses: actions/checkout@v4
             - run: mkdir -p ${{ github.workspace }}/build
             - name: Configure CMake
