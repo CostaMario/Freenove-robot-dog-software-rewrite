@@ -6,7 +6,7 @@ jobs:
         runs-on: ubuntu-22.04
         steps:
             - name: Checkout
-              uses: actions/checkout@v2
+              uses: actions/checkout@v4
               with:
                 submodules: true
             - name: Git Submodule Update
@@ -20,8 +20,8 @@ jobs:
             - name: Configure CMake
               run: cmake -DCMAKE_TOOLCHAIN_FILE=../robot-src/Toolchain-RaspberryPi.cmake robot-src -B ${{ github.workspace }}/build
             - run: cmake --build ${{ github.workspace }}/build
-            - name: Release
-              uses: softprops/action-gh-release@v2
-              if: startsWith(github.ref, 'refs/tags/')
+            - name: Upload artifact
+              uses: actions/upload-artifact@v4
               with:
-                files: build/robot-server
+                name: robot-server
+                path: ${{ github.workspace }}/build/robot-server
