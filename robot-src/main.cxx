@@ -24,6 +24,14 @@ ws2811_led_t color = 0x00200000;
 int main()
 {
     std::cout << "Testing, testing" << std::endl;
+    
+    ws2811_return_t ret;
+    if ((ret = ws2811_init(&ledstring)) != WS2811_SUCCESS)
+    {
+        fprintf(stderr, "ws2811_init failed: %s\n", ws2811_get_return_t_str(ret));
+        return ret;
+    }
+    
     while (true)
     {
         ledstring.channel[0].leds[0] = color;

@@ -12,8 +12,10 @@ jobs:
             - name: Git Submodule Update
               run: |
                 git submodule update
-            - run: sudo apt-get install gcc-aarch64-linux-gnu
-            - run: sudo apt-get install g++-aarch64-linux-gnu
+            - run: sudo apt-get update
+            - run: sudo apt-get -y install gcc-aarch64-linux-gnu
+            - run: sudo apt-get -y install g++-aarch64-linux-gnu
+            - run: sudo apt-get -y install cmake
             - run: git -C ${{ github.workspace }} submodule update
             - uses: actions/checkout@v4
             - run: mkdir -p ${{ github.workspace }}/build
