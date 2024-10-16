@@ -1,12 +1,12 @@
 name: Build project
 run-name: ${{ github.actor }} is building the project.
-on: [release]
+on: [push]
 jobs:
     Build-robot-source:
         runs-on: ubuntu-22.04
         steps:
-            - run: apt-get install gcc-aarch64-linux-gnu
-            - run: apt-get install g++-aarch64-linux-gnu
+            - run: sudo apt-get install gcc-aarch64-linux-gnu
+            - run: sudo apt-get install g++-aarch64-linux-gnu
             - uses: actions/checkout@v4
             - run: mkdir -p ${{ github.workspace }}/build
             - name: Configure CMake
