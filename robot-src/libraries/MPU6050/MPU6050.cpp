@@ -15,7 +15,7 @@
 
 #include "MPU6050.h" // Include definitions and declarations within the header file
 #include <iostream>  // Used for data output
-#include "smbus.c"
+#include "../smbus.c"
 // Used for the I2C interface
 #include <linux/i2c-dev.h> // For SMBus commands
 #include <sys/ioctl.h>     // For ioctl()
