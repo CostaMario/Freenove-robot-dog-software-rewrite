@@ -1,3 +1,6 @@
 [submodule "robot-src/libraries/rpi_ws281x"]
 	path = robot-src/libraries/rpi_ws281x
 	url = https://github.com/jgarff/rpi_ws281x.git
+[submodule "robot-src/libraries/RPI_MPU6050_I2C"]
+	path = robot-src/libraries/RPI_MPU6050_I2C
+	url = https://github.com/NathanielJS1541/RPI_MPU6050_I2C.git
