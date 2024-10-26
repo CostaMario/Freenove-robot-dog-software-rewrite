@@ -1,6 +1,7 @@
 #include <iostream>
 #include <ws2811.h>
 #include "MPU6050.h"
+#include "PCA9685.h"
 #include <unistd.h>
 
 ws2811_t ledstring =
@@ -37,13 +38,16 @@ int main()
 
     MPU6050 gyro;
     std::cout << gyro << std::endl;
+
+    PCA9685 pca9685;
+    Servo servo(&pca9685);
     
     while (true)
     {
         gyro.updateData();
-        std::cout << "X: " << gyro.getGyroX() << std::endl;
-        std::cout << "Y: " << gyro.getGyroY() << std::endl;
-        std::cout << "Z: " << gyro.getGyroZ() << std::endl;
+        //std::cout << "X: " << gyro.getGyroX() << std::endl;
+        //std::cout << "Y: " << gyro.getGyroY() << std::endl;
+        //std::cout << "Z: " << gyro.getGyroZ() << std::endl;
 
         ledstring.channel[0].leds[0] = red;
         ws2811_render(&ledstring);
@@ -60,5 +64,11 @@ int main()
         ledstring.channel[0].leds[0] = 0;
         ws2811_render(&ledstring);
         usleep(500000);
+
+        for(unsigned char i = 0; i<16; i++)
+        {
+            usleep(10);
+            servo.setServoAngle(i, 90);
+        }
     }
 }

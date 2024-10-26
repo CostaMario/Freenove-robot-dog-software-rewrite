@@ -1,5 +1,10 @@
 #pragma once
 
+#include <linux/i2c-dev.h> // For SMBus commands
+#include <sys/ioctl.h>     // For ioctl()
+#include <fcntl.h>         // For O_RDWR
+#include <unistd.h>        // For open()
+
 // Registers/etc.
 #define __SUBADR1            0x02
 #define __SUBADR2            0x03
@@ -21,17 +26,38 @@ class PCA9685
 
     PCA9685(int address=0x40);
 
-    void setPWMFreq(const unsigned char freq);
-    void setMotorPWM(const unsigned char channel, const unsigned char duty);
+    void setPWMFreq(const unsigned int freq);
+    void setMotorPWM(const unsigned int channel, const unsigned int duty);
 
-    void setServoPulse(const unsigned char channel, const unsigned char pulse);
+    void setServoPulse(const unsigned int channel, const unsigned int pulse);
+
+    void setPWM(const unsigned int channel, const unsigned int on, const unsigned int off);
+
+
+    int _address;
+    int _handle;
+
+    signed int write(const unsigned int reg, const unsigned char value);
+    __s32 read(const unsigned int reg);
+};
+
+class Servo
+{
+    public:
+
+    Servo(PCA9685* pca9685, unsigned int angleMin = 18, unsigned int angleMax = 162);
+
+    void setServoAngle(unsigned int channel, unsigned int angle);
 
     private:
 
-    int _address;
+    PCA9685* _pca9685;
+    unsigned int _angleMin;
+    unsigned int _angleMax;
 
-    void write(const unsigned char reg, const unsigned char value);
-    __s32 read(const unsigned char reg);
-
-    void setPWM(const unsigned char channel, const unsigned char on, const unsigned char off);
+    unsigned int mapAngle(unsigned int value,
+                            unsigned int fromLow,
+                            unsigned int fromHigh,
+                            unsigned int toLow,
+                            unsigned int toHigh);
 };
