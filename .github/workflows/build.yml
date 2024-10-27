@@ -17,6 +17,7 @@ jobs:
             - run: sudo apt-get -y install g++-aarch64-linux-gnu
             - run: sudo apt-get -y install libi2c-dev
             - run: sudo apt-get -y install cmake
+            - run: git -C ${{ github.workspace }} submodule init
             - run: git -C ${{ github.workspace }} submodule update
             - uses: actions/checkout@v4
             - run: mkdir -p ${{ github.workspace }}/build
