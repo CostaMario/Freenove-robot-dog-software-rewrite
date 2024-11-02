@@ -2,7 +2,7 @@
 #include <ws2811.h>
 #include "MPU6050.h"
 #include "PCA9685.h"
-//#include "sonar.h"
+#include "sonar.h"
 #include <unistd.h>
 
 ws2811_t ledstring =
@@ -43,7 +43,7 @@ int main()
     PCA9685 pca9685;
     Servo servo(&pca9685);
 
-    //Sonar sonar;
+    Sonar sonar;
     
     while (true)
     {

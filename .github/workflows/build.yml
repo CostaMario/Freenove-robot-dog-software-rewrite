@@ -12,14 +12,24 @@ jobs:
             - name: Git Submodule Update
               run: |
                 git submodule update
-            - run: sudo apt-get update
+            - run: sudo apt-get update --ignore-missing
             - run: sudo apt-get -y install gcc-aarch64-linux-gnu
             - run: sudo apt-get -y install g++-aarch64-linux-gnu
             - run: sudo apt-get -y install libi2c-dev
             - run: sudo apt-get -y install cmake
             - run: git -C ${{ github.workspace }} submodule init
             - run: git -C ${{ github.workspace }} submodule update
-            - uses: actions/checkout@v4
+            - uses: uraimo/run-on-arch-action@v2
+              name: Build wiringpi
+              id: runcmd
+              with:
+                arch: aarch64
+                distro: ubuntu22.04
+                shell: /bin/sh
+                dockerRunArgs: |
+                  --debug
+                run: |
+                  sudo apt-get -y install libcrypt-dev && cd ${{ github.workspace }}/robot-src/libraries/WiringPi/wiringPi && make && cd ${{ github.workspace }}
             - run: mkdir -p ${{ github.workspace }}/build
             - name: Configure CMake
               run: cmake -DCMAKE_TOOLCHAIN_FILE=../robot-src/Toolchain-RaspberryPi.cmake robot-src -B ${{ github.workspace }}/build

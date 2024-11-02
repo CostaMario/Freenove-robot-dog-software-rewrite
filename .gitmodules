@@ -1,6 +1,6 @@
 [submodule "robot-src/libraries/rpi_ws281x"]
 	path = robot-src/libraries/rpi_ws281x
 	url = https://github.com/jgarff/rpi_ws281x.git
-[submodule "robot-src/libraries/wiringPi-mock"]
-	path = robot-src/libraries/wiringPi-mock
-	url = https://github.com/iwishiwasaneagle/wiringPi-mock.git
+[submodule "robot-src/libraries/WiringPi"]
+	path = robot-src/libraries/WiringPi
+	url = https://github.com/WiringPi/WiringPi.git
