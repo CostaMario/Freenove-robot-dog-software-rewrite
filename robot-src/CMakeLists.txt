@@ -21,4 +21,4 @@ target_link_libraries(robot-server PRIVATE ws2811)
 add_library(wiringPi STATIC IMPORTED)
 set_property(TARGET wiringPi PROPERTY IMPORTED_LOCATION "${CMAKE_BINARY_DIR}/usr/lib/libwiringPi.so.3.10")
 
-target_link_libraries(robot-server PUBLIC wiringPi)
+target_link_libraries(robot-server PRIVATE wiringPi)
