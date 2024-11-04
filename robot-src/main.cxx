@@ -1,7 +1,7 @@
 #include <iostream>
 #include <ws2811.h>
 #include "MPU6050.h"
-#include "PCA9685.h"
+#include "movement.h"
 #include "sonar.h"
 #include <unistd.h>
 
@@ -42,8 +42,12 @@ int main()
 
     PCA9685 pca9685;
     Servo servo(&pca9685);
+    Leg leg(&servo, 7, 6, 5);
 
     Sonar sonar;
+
+    float x = 0.0f;
+    bool t = true;
     
     while (true)
     {
@@ -68,12 +72,26 @@ int main()
 
         //ledstring.channel[0].leds[0] = 0;
         //ws2811_render(&ledstring);
-        //usleep(500000);
+        usleep(500);
 
-        for(unsigned char i = 0; i<16; i++)
+        if(x < -10 && t == false)
         {
-            usleep(10);
-            servo.setServoAngle(i, 90);
+            t = true;
         }
+        else if(x > .5 && t)
+        {
+            t = false;
+        }
+
+        if(t)
+        {
+            x += 0.01f;
+        }
+        else
+        {
+            x -= 0.01f;
+        }
+
+        leg.SetTarget(x, -10.0f, 0);
     }
 }
