@@ -52,9 +52,11 @@ int main()
         //std::cout << "Y: " << gyro.getGyroY() << std::endl;
         //std::cout << "Z: " << gyro.getGyroZ() << std::endl;
 
-        ledstring.channel[0].leds[0] = red;
-        ws2811_render(&ledstring);
-        usleep(500000);
+        std::cout << "Dist: " << sonar.GetDistance() << " cm" << std::endl;
+
+        //ledstring.channel[0].leds[0] = red;
+        //ws2811_render(&ledstring);
+        //usleep(500000);
 
         //ledstring.channel[0].leds[0] = green;
         //ws2811_render(&ledstring);
@@ -64,9 +66,9 @@ int main()
         //ws2811_render(&ledstring);
         //usleep(500000);
 
-        ledstring.channel[0].leds[0] = 0;
-        ws2811_render(&ledstring);
-        usleep(500000);
+        //ledstring.channel[0].leds[0] = 0;
+        //ws2811_render(&ledstring);
+        //usleep(500000);
 
         for(unsigned char i = 0; i<16; i++)
         {
