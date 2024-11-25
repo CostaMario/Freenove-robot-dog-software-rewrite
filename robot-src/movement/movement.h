@@ -13,6 +13,11 @@ class Leg
         const float middle_length = 5.5f;
         const float foot_length = 6.0f;
 
+        const float x_pivot_offset = 2.0f;
+        const float y_pivot_offset = 2.5f;
+
+        float middle_to_foot_ratio;
+
         Servo* _servo;
 
         float x_target = 0.0f;

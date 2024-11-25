@@ -56,7 +56,7 @@ int main()
         //std::cout << "Y: " << gyro.getGyroY() << std::endl;
         //std::cout << "Z: " << gyro.getGyroZ() << std::endl;
 
-        std::cout << "Dist: " << sonar.GetDistance() << " cm" << std::endl;
+        //std::cout << "Dist: " << sonar.GetDistance() << " cm" << std::endl;
 
         //ledstring.channel[0].leds[0] = red;
         //ws2811_render(&ledstring);
@@ -74,24 +74,31 @@ int main()
         //ws2811_render(&ledstring);
         usleep(500);
 
-        if(x < -10 && t == false)
+        /*if(x < -1 && t == false)
         {
             t = true;
         }
-        else if(x > .5 && t)
+        else if(x > 30 && t)
         {
             t = false;
         }
 
         if(t)
         {
-            x += 0.01f;
+            x += 0.1f;
         }
         else
         {
-            x -= 0.01f;
+            x -= 0.1f;
         }
 
-        leg.SetTarget(x, -10.0f, 0);
+        std::cout << x << '\n';
+
+        leg.SetTarget(x, -10.0f, 0);*/
+        
+        for(int i = 0; i < 16; i++)
+        {
+            servo.setServoAngle(i, 90);
+        }
     }
 }

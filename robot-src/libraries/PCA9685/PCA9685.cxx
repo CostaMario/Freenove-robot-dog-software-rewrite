@@ -14,7 +14,13 @@ PCA9685::PCA9685(int address)
         exit(2);
     }
     
-    write(__MODE1, 0x00);
+    reset();
+}
+
+void PCA9685::reset()
+{
+    write(__MODE1, (char)__MODE1_RESTART);
+    usleep(10000);
 }
 
 void PCA9685::setPWMFreq(const unsigned int freq)
@@ -29,8 +35,8 @@ void PCA9685::setPWMFreq(const unsigned int freq)
     unsigned int prescale = (unsigned int)std::floor(prescaleval + 0.5);
 
     __s32 oldmode = read(__MODE1);
-    __s32 newmode = (oldmode & 0x7F) / 0x10;
-    //std::cout << "oldmode "<< oldmode << " newmode " << (int)newmode << " prescale " << prescale << std::endl;
+    __s32 newmode = (oldmode & __MODE1_RESTART) | 0x10;
+    //std::cout << "oldmode "<< oldmode << " newmode " << (int)newmode << "newmode float" << newmode << " prescale " << prescale << std::endl;
     write(__MODE1, (char)newmode);
     write(__PRESCALE, (char)prescale);
     write(__MODE1, (char)oldmode);
@@ -45,7 +51,7 @@ void PCA9685::setMotorPWM(const unsigned int channel, const unsigned int duty)
 
 void PCA9685::setServoPulse(const unsigned int channel, const unsigned int pulse)
 {
- int pulse_f =  (int)(pulse*4096/20000);
+    int pulse_f = (int)(pulse*4096/20000);
     setPWM(channel, 0, pulse_f);
 }
 
@@ -62,7 +68,7 @@ __s32 PCA9685::read(const unsigned int reg)
 void PCA9685::setPWM(const unsigned int channel, const unsigned int on, const unsigned int off)
 {
     //std::cout << "WRITIN " << (on & 0xFF) << " " << (on >> 8) << " " << (off & 0xFF) << " " << (off >> 8) << '\n';
-    //std::cout << "w " << write(__LED0_ON_L+4*channel, (char)(on & 0xFF)) << '\n';
+    write(__LED0_ON_L+4*channel, (char)(on & 0xFF));
     write(__LED0_ON_H+4*channel, (char)(on >> 8));
     write(__LED0_OFF_L+4*channel, (char)(off & 0xFF));
     write(__LED0_OFF_H+4*channel, (char)(off >> 8));
@@ -74,7 +80,7 @@ Servo::Servo(PCA9685* pca9685, unsigned int angleMin, unsigned int angleMax)
     _pca9685 = pca9685;
     _angleMin = angleMin;
     _angleMax = angleMax;
-    pca9685->setPWMFreq(30);
+    pca9685->setPWMFreq(50);
 }
 
 void Servo::setServoAngle(unsigned int channel, unsigned int angle)

@@ -19,6 +19,7 @@
 #define __ALLLED_ON_H        0xFB
 #define __ALLLED_OFF_L       0xFC
 #define __ALLLED_OFF_H       0xFD
+#define __MODE1_RESTART      0x80
 
 class PCA9685
 {
@@ -33,6 +34,7 @@ class PCA9685
 
     void setPWM(const unsigned int channel, const unsigned int on, const unsigned int off);
 
+    void reset();
 
     int _address;
     int _handle;
