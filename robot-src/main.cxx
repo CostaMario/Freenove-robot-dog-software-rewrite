@@ -42,7 +42,13 @@ int main()
 
     PCA9685 pca9685;
     Servo servo(&pca9685);
-    Leg leg(&servo, 7, 6, 5);
+
+    // The following mappings follow the wiring diagram in the official guide for the robot
+    Leg legs[4] { 
+        Leg(&servo, 11, 12, 13),        // front right
+        Leg(&servo, 4, 3, 2, true),     // front left
+        Leg(&servo, 8, 9, 10),          // back right
+        Leg(&servo, 7, 6, 5, true)};    // back left
 
     Sonar sonar;
 
@@ -72,33 +78,32 @@ int main()
 
         //ledstring.channel[0].leds[0] = 0;
         //ws2811_render(&ledstring);
-        usleep(500);
+        usleep(50000);
 
-        /*if(x < -1 && t == false)
+        if(x < -2 && t == false)
         {
             t = true;
         }
-        else if(x > 30 && t)
+        else if(x > 2 && t)
         {
             t = false;
         }
 
         if(t)
         {
-            x += 0.1f;
+            x += 0.5f;
         }
         else
         {
-            x -= 0.1f;
+            x -= 0.5f;
         }
 
         std::cout << x << '\n';
-
-        leg.SetTarget(x, -10.0f, 0);*/
         
-        for(int i = 0; i < 16; i++)
+        for(int i = 0; i < 4; i++)
         {
-            servo.setServoAngle(i, 90);
+            legs[i].SetTarget(x, 5.5, 0);
+            usleep(1000);
         }
     }
 }

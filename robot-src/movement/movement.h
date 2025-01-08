@@ -10,11 +10,13 @@ class Leg
         unsigned int foot_servo;
 
         const float top_radius = 2.5f;
-        const float middle_length = 5.5f;
-        const float foot_length = 6.0f;
+        const float middle_length = 5.6f;
+        const float foot_length = 6.2f;
 
         const float x_pivot_offset = 2.0f;
-        const float y_pivot_offset = 2.5f;
+        const float y_pivot_offset = 2.0f;
+
+        bool is_left;
 
         float middle_to_foot_ratio;
 
@@ -25,7 +27,7 @@ class Leg
         float z_target = 0.0f;
 
     public:
-        Leg(Servo* servo, unsigned const int top, unsigned const int middle, unsigned const int foot);
+        Leg(Servo* servo, unsigned const int top, unsigned const int middle, unsigned const int foot, const bool left = false);
         void SetTarget(const float x, const float y, const float z);
         void UpdateLeg();
 };

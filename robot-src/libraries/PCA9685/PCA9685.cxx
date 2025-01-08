@@ -14,6 +14,7 @@ PCA9685::PCA9685(int address)
         exit(2);
     }
     
+    write(__MODE1, 0x00);
     reset();
 }
 
@@ -35,13 +36,13 @@ void PCA9685::setPWMFreq(const unsigned int freq)
     unsigned int prescale = (unsigned int)std::floor(prescaleval + 0.5);
 
     __s32 oldmode = read(__MODE1);
-    __s32 newmode = (oldmode & __MODE1_RESTART) | 0x10;
+    __s32 newmode = (oldmode & 0x7F) | 0x10;
     //std::cout << "oldmode "<< oldmode << " newmode " << (int)newmode << "newmode float" << newmode << " prescale " << prescale << std::endl;
     write(__MODE1, (char)newmode);
     write(__PRESCALE, (char)prescale);
     write(__MODE1, (char)oldmode);
-    usleep(50000);
-    write(__MODE1, (char)oldmode / 0x80);
+    usleep(5000);
+    write(__MODE1, (char)oldmode | 0x80);
 }
 
 void PCA9685::setMotorPWM(const unsigned int channel, const unsigned int duty)
@@ -98,6 +99,7 @@ void Servo::setServoAngle(unsigned int channel, unsigned int angle)
     //std::cout << (int)mapped << std::endl;
     _pca9685->setPWM(channel, 0, mapped);
     //std::cout << _pca9685->read(__LED0_OFF_L+4*channel) << "  " << (int)(mapped & 0xFF) << std::endl;
+    usleep(500);
 }
 
 unsigned int Servo::mapAngle(unsigned int value,
